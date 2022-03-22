@@ -1,6 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+ 
 public class myJDBC {
     public static void main(String[] args) throws Exception {
         Add a = new Add();
