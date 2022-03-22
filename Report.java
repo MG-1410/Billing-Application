@@ -95,6 +95,6 @@ public class Report {
         }
         else if(!sr.next()){
             System.out.println("All items are in stock..");
-        }
+        } 
     }
 }
