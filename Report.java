@@ -5,7 +5,7 @@ public class Report {
     Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/Customer","root","Muthujega@2001");
 
     public Report() throws SQLException {
-    }
+    } 
 
     public void report(int choice) throws Exception{
         Scanner in = new Scanner(System.in);
