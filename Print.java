@@ -159,26 +159,20 @@ public class Print {
         }
         System.out.println(" Discount    = " + per +" %");
         System.out.println(" Total amount = " + amt);
-        PreparedStatement bb = connection.prepareStatement("UPDATE bill SET price = ?  WHERE billno = ? AND storeid = ? ");
+        Date date = (Date) new java.util.Date();
+        PreparedStatement bb = connection.prepareStatement("UPDATE bill SET price = ? ,profit = ?,dis = ?, orderdate = ?   WHERE billno = ? AND storeid = ? ");
         bb.setInt(1,amt);
-        bb.setInt(2,bno);
-        bb.setInt(3,choice);
+        bb.setInt(2,pro);
+        bb.setInt(1,per);
+        bb.setDate(4,date);
+        bb.setInt(5,bno);
+        bb.setInt(6,choice);
         int a = bb.executeUpdate();
-        PreparedStatement cc = connection.prepareStatement("UPDATE bill SET profit = ? WHERE billno = ? AND storeid = ? ");
-        cc.setInt(1,pro);
-        cc.setInt(2,bno);
-        cc.setInt(3,choice);
-        int b = cc.executeUpdate();
-        if(a == 1 && b ==1 ){
+
+        if(a == 1){
             System.out.println("Bill added..");
         }
-        PreparedStatement dd = connection.prepareStatement("UPDATE bill SET dis = ? WHERE billno = ? AND storeid = ? ");
-        dd.setInt(1,per);
-        dd.setInt(2,bno);
-        dd.setInt(3,choice);
-        int c = dd.executeUpdate();
         total = 0 ;
         pro = 0;
     }
 }
- 
