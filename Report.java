@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 public class Report {
     Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/Customer","root","Muthujega@2001");
@@ -7,12 +8,19 @@ public class Report {
     }
 
     public void report(int choice) throws Exception{
+        Scanner in = new Scanner(System.in);
         System.out.println();
         System.out.println();
         System.out.println("   Sales Report Generation");
         System.out.println();
-        PreparedStatement st = connection.prepareStatement("SELECT sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE b.storeid = ? ");
+        System.out.print("Enter the date from: ");
+        String from = in.nextLine();
+        System.out.print("Enter the date to: ");
+        String to = in.nextLine();
+        PreparedStatement st = connection.prepareStatement("SELECT sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE b.storeid = ? AND orderdate between ? and ? ");
         st.setInt(1,choice);
+        st.setString(2,from);
+        st.setString(3,to);
         ResultSet tp = st.executeQuery();
         while(tp.next())
         {
@@ -20,40 +28,50 @@ public class Report {
             System.out.println();
         }
 
-        PreparedStatement pst = connection.prepareStatement("SELECT sum(price) FROM bill WHERE storeid= ? ");
+        PreparedStatement pst = connection.prepareStatement("SELECT sum(price) FROM bill WHERE storeid= ? AND orderdate between ? and ?");
         pst.setInt(1,choice);
+        pst.setString(2,from);
+        pst.setString(3,to);
         ResultSet ta = pst.executeQuery();
         while (ta.next())
         {
             System.out.println("Total amount: " + ta.getInt(1));
             System.out.println();
         }
-        PreparedStatement spt = connection.prepareStatement("SELECT sum(profit) FROM bill WHERE storeid= ? ");
+        PreparedStatement spt = connection.prepareStatement("SELECT sum(profit) FROM bill WHERE storeid= ? AND orderdate between ? and ?");
         spt.setInt(1,choice);
+        spt.setString(2,from);
+        spt.setString(3,to);
         ResultSet pr = spt.executeQuery();
         while(pr.next()){
             System.out.println("Total profit: " + pr.getInt(1));
             System.out.println();
         }
         int cus = 0;
-        PreparedStatement stp = connection.prepareStatement("SELECT CusId , sum(price) FROM bill WHERE storeid= ? GROUP BY CusId ORDER BY sum(price) DESC LIMIT 1");
+        PreparedStatement stp = connection.prepareStatement("SELECT CusId , sum(price) FROM bill WHERE storeid= ? AND orderdate between ? and ? GROUP BY CusId ORDER BY sum(price) DESC LIMIT 1");
         stp.setInt(1,choice);
+        stp.setString(2,from);
+        stp.setString(3,to);
         ResultSet oc = stp.executeQuery();
         while(oc.next()){
             System.out.println("Overall Top Buying Customer: " + oc.getInt(1) + "  Price: " + oc.getInt(2));
             cus = oc.getInt(1);
             System.out.println();
         }
-        PreparedStatement a = connection.prepareStatement("SELECT price FROM bill WHERE storeid = ? ORDER BY price DESC LIMIT 1");
+        PreparedStatement a = connection.prepareStatement("SELECT price FROM bill WHERE storeid = ? AND orderdate between ? and ? ORDER BY price DESC LIMIT 1");
         a.setInt(1,choice);
+        a.setString(2,from);
+        a.setString(3,to);
         ResultSet bp = a.executeQuery();
         while(bp.next()){
             System.out.println("Top billing amount: " + bp.getInt(1));
             System.out.println();
         }
         System.out.println("Top 3 Selling product: ");
-        PreparedStatement b = connection.prepareStatement("SELECT proid , name , sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE storeid = ? GROUP BY proid ORDER BY sum(quantity) DESC LIMIT 3");
+        PreparedStatement b = connection.prepareStatement("SELECT proid , name , sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE storeid = ? AND orderdate between ? and ? GROUP BY proid ORDER BY sum(quantity) DESC LIMIT 3");
         b.setInt(1,choice);
+        b.setString(2,from);
+        b.setString(3,to);
         ResultSet r = b.executeQuery();
         System.out.println( "Product Id     " + "Product Name " + "     " + "Quantity" );
         while(r.next())
@@ -63,8 +81,10 @@ public class Report {
         }
         System.out.println();
         System.out.println("Top 3 Non-Selling Items: ");
-        PreparedStatement ab = connection.prepareStatement("SELECT proid , name , sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE storeid = ? GROUP BY proid ORDER BY sum(quantity) LIMIT 3");
+        PreparedStatement ab = connection.prepareStatement("SELECT proid , name , sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE storeid = ? AND orderdate between ? and ? GROUP BY proid ORDER BY sum(quantity) LIMIT 3");
         ab.setInt(1,choice);
+        ab.setString(2,from);
+        ab.setString(3,to);
         ResultSet rs = ab.executeQuery();
         System.out.println( "Product Id     " + "Product Name " + "     " + "Quantity" );
         while(rs.next())
@@ -95,6 +115,6 @@ public class Report {
         }
         else if(!sr.next()){
             System.out.println("All items are in stock..");
-        } 
+        }
     }
 }
