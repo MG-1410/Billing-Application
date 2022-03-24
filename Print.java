@@ -1,6 +1,8 @@
+package Billing;
+
 import java.sql.*;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.sql.Date;
+import java.util.*;
 
 public class Print {
     Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/Customer","root","Muthujega@2001");
@@ -175,4 +177,4 @@ public class Print {
         total = 0 ;
         pro = 0;
     }
-} 
+}
