@@ -1,11 +1,13 @@
+package Billing;
+
 import java.sql.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class Report {
     Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/Customer","root","Muthujega@2001");
 
     public Report() throws SQLException {
-    } 
+    }
 
     public void report(int choice) throws Exception{
         Scanner in = new Scanner(System.in);
@@ -27,7 +29,6 @@ public class Report {
             System.out.println("Total products selled: " + tp.getInt(1));
             System.out.println();
         }
-
         PreparedStatement pst = connection.prepareStatement("SELECT sum(price) FROM bill WHERE storeid= ? AND orderdate between ? and ?");
         pst.setInt(1,choice);
         pst.setString(2,from);
@@ -118,3 +119,4 @@ public class Report {
         }
     }
 }
+
