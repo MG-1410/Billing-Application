@@ -1,11 +1,13 @@
+package Billing;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
- 
+
 public class myJDBC {
     public static void main(String[] args) throws Exception {
-        Add a = new Add();
-        Delete d = new Delete();
-        Update u = new Update();
+        customer c = new customer();
+        item i = new item();
+        bill b = new bill();
         Print p = new Print();
         Report r = new Report();
         Scanner in = new Scanner(System.in);
@@ -25,9 +27,9 @@ public class myJDBC {
                     System.out.println();
                     continue;
                 }
-                System.out.println("1. Add");
-                System.out.println("2. Delete");
-                System.out.println("3. Update");
+                System.out.println("1. Customer");
+                System.out.println("2. Item");
+                System.out.println("3. Bill");
                 System.out.println("4. Print");
                 System.out.println("5. Sales Report");
                 System.out.print("Enter the Operation: ");
@@ -35,14 +37,14 @@ public class myJDBC {
                 switch (ope) {
                     case 1 -> {
                         System.out.println("  1.Add Customer");
-                        System.out.println("  2.Add Item");
-                        System.out.println("  3.Add Bill");
+                        System.out.println("  2.Delete Customer");
+                        System.out.println("  3.Update Customer");
                         System.out.print("Enter the choice: ");
                         int ch = in.nextInt();
                         switch (ch) {
-                            case 1 -> a.addCus(choice);
-                            case 2 -> a.addItem(choice);
-                            case 3 -> a.addBill(choice);
+                            case 1 -> c.add(choice);
+                            case 2 -> c.delete(choice);
+                            case 3 -> c.update(choice);
                             default -> System.out.println("Enter the valid Choice");
                         }
                     }
@@ -53,9 +55,9 @@ public class myJDBC {
                         System.out.print("Enter the choice: ");
                         int co = in.nextInt();
                         switch (co) {
-                            case 1 -> d.deleteCus(choice);
-                            case 2 -> d.deleteIt(choice);
-                            case 3 -> d.deleteBill(choice);
+                            case 1 -> i.add(choice);
+                            case 2 -> i.delete(choice);
+                            case 3 -> i.update(choice);
                             default -> System.out.println("Enter the valid Choice");
                         }
                     }
@@ -65,8 +67,8 @@ public class myJDBC {
                         System.out.print("Enter the choice: ");
                         int ci = in.nextInt();
                         switch (ci) {
-                            case 1 -> u.updateCus(choice);
-                            case 2 -> u.updateIt(choice);
+                            case 1 -> b.add(choice);
+                            case 2 -> b.delete(choice);
                             default -> System.out.println("Enter the valid Choice");
                         }
                     }
