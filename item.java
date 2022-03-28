@@ -9,6 +9,8 @@ public class item implements store{
     public item() throws SQLException {
     }
 
+    // To add new item in the store
+    
     public void add(int choice) throws Exception{
         Scanner it = new Scanner(System.in);
         Scanner pr = new Scanner(System.in);
@@ -57,7 +59,8 @@ public class item implements store{
         }
     }
 
-    @Override
+    //To delete the existing item from the store
+    
     public void delete(int choice) throws Exception {
         Scanner dit = new Scanner(System.in);
         try {
@@ -94,7 +97,8 @@ public class item implements store{
         }
     }
 
-    @Override
+    // To update the existing item from the store eg.stocks of the items
+    
     public void update(int choice) throws Exception {
         Scanner uit = new Scanner(System.in);
         Scanner in = new Scanner(System.in);
