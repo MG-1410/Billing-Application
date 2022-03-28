@@ -9,7 +9,8 @@ public class bill implements store{
     public bill() throws SQLException {
     }
 
-    @Override
+    // To add items to the bill
+    
     public void add(int choice) throws Exception {
         Scanner addb = new Scanner(System.in);
         Scanner adb = new Scanner(System.in);
@@ -133,7 +134,8 @@ public class bill implements store{
         }
     }
 
-    @Override
+    // To delete the bill from the store
+    
     public void delete(int choice) throws Exception {
         Scanner in = new Scanner(System.in);
         Scanner is = new Scanner(System.in);
@@ -171,7 +173,8 @@ public class bill implements store{
         }
     }
 
-    @Override
+    // Updating the bill is not recommended after adding the items
+    
     public void update(int choice) throws Exception {
         System.out.println("Enter valid choice..");
     }
