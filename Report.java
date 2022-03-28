@@ -9,6 +9,8 @@ public class Report {
     public Report() throws SQLException {
     }
 
+    // To view the sales report of the store
+    
     public void report(int choice) throws Exception{
         Scanner in = new Scanner(System.in);
         System.out.println();
@@ -29,6 +31,9 @@ public class Report {
             System.out.println("Total products selled: " + tp.getInt(1));
             System.out.println();
         }
+        
+        // To view the total price of the products selled in the store
+        
         PreparedStatement pst = connection.prepareStatement("SELECT sum(price) FROM bill WHERE storeid= ? AND orderdate between ? and ?");
         pst.setInt(1,choice);
         pst.setString(2,from);
@@ -39,6 +44,9 @@ public class Report {
             System.out.println("Total amount: " + ta.getInt(1));
             System.out.println();
         }
+        
+        // To view the total profit of the store 
+        
         PreparedStatement spt = connection.prepareStatement("SELECT sum(profit) FROM bill WHERE storeid= ? AND orderdate between ? and ?");
         spt.setInt(1,choice);
         spt.setString(2,from);
@@ -48,6 +56,9 @@ public class Report {
             System.out.println("Total profit: " + pr.getInt(1));
             System.out.println();
         }
+        
+        // To view the overall top buying customer of the store based on the total buying price of the customer
+        
         int cus = 0;
         PreparedStatement stp = connection.prepareStatement("SELECT CusId , sum(price) FROM bill WHERE storeid= ? AND orderdate between ? and ? GROUP BY CusId ORDER BY sum(price) DESC LIMIT 1");
         stp.setInt(1,choice);
@@ -59,6 +70,9 @@ public class Report {
             cus = oc.getInt(1);
             System.out.println();
         }
+        
+        // To view the top billing amount of the store 
+        
         PreparedStatement a = connection.prepareStatement("SELECT price FROM bill WHERE storeid = ? AND orderdate between ? and ? ORDER BY price DESC LIMIT 1");
         a.setInt(1,choice);
         a.setString(2,from);
@@ -68,6 +82,9 @@ public class Report {
             System.out.println("Top billing amount: " + bp.getInt(1));
             System.out.println();
         }
+        
+        // To view the top three items sold in the store
+        
         System.out.println("Top 3 Selling product: ");
         PreparedStatement b = connection.prepareStatement("SELECT proid , name , sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE storeid = ? AND orderdate between ? and ? GROUP BY proid ORDER BY sum(quantity) DESC LIMIT 3");
         b.setInt(1,choice);
@@ -81,6 +98,9 @@ public class Report {
             System.out.println();
         }
         System.out.println();
+        
+        // To view the top three non-selling items in the store
+        
         System.out.println("Top 3 Non-Selling Items: ");
         PreparedStatement ab = connection.prepareStatement("SELECT proid , name , sum(quantity) FROM orders o JOIN bill b ON o.billno = b.billno WHERE storeid = ? AND orderdate between ? and ? GROUP BY proid ORDER BY sum(quantity) LIMIT 3");
         ab.setInt(1,choice);
@@ -93,6 +113,9 @@ public class Report {
             System.out.printf("%-15d%-20s%-12d",rs.getInt(1),rs.getString(2),rs.getInt(3));
             System.out.println();
         }
+        
+        // To view the available stocks of the items present in the store
+        
         System.out.println();
         System.out.println("Stocks of Item Remaining: ");
         PreparedStatement ba = connection.prepareStatement("SELECT productId , product , stock FROM item WHERE storeid = ? ");
@@ -104,6 +127,9 @@ public class Report {
             System.out.printf("%-15d%-20s%-12d",rss.getInt(1),rss.getString(2),rss.getInt(3));
             System.out.println();
         }
+        
+        // To view the out of items in the store
+        
         System.out.println();
         System.out.println("Out of Stock Items: ");
         PreparedStatement cc = connection.prepareStatement("SELECT productId, product FROM item WHERE storeid= ? AND stock = 0");
