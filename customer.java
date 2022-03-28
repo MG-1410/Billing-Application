@@ -8,7 +8,9 @@ public class customer implements store{
 
     public customer() throws SQLException {
     }
-
+    
+    // To add new customer into the store
+    
     public void add(int choice) throws Exception {
         Scanner in = new Scanner(System.in);
         Scanner ss = new Scanner(System.in);
@@ -27,7 +29,7 @@ public class customer implements store{
                 st.setDouble(3, phn);
                 st.setInt(4, choice);
                 int cus1 = st.executeUpdate();
-                if (cus1 == 1) {
+                if(cus1 == 1) {
                     System.out.println("Customer Created Successfully");
                 } else {
                     System.out.println("Customer Creation failed");
@@ -45,7 +47,8 @@ public class customer implements store{
         }
     }
 
-    @Override
+    // To delete the customer from the store
+    
     public void delete(int choice) throws Exception {
         Scanner in = new Scanner(System.in);
         try {
@@ -82,7 +85,8 @@ public class customer implements store{
         }
     }
 
-    @Override
+    // To update the customer details
+    
     public void update(int choice) throws Exception {
         Scanner in = new Scanner(System.in);
         Scanner is = new Scanner(System.in);
