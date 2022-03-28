@@ -9,6 +9,8 @@ public class Print {
 
     public Print() throws SQLException {
     }
+    
+    // To print the bill by billno
 
     public void printBill(int choice) throws Exception {
         Scanner in = new Scanner(System.in);
@@ -78,6 +80,8 @@ public class Print {
             System.out.println("Enter Valid Credentials...");
         }
     }
+    
+    // To find the customer id by using phone number incase customer id is forgetten by the customer
 
     public void cusId(int choice) throws Exception {
         Scanner in = new Scanner(System.in);
@@ -107,6 +111,8 @@ public class Print {
             System.out.println("Enter Valid Credentials...");
         }
     }
+    
+    // To add the bill into the database
 
     public void addBill(int bno,int choice,int cid, int per)throws Exception{
         Scanner in = new Scanner(System.in);
